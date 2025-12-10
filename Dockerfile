@@ -1,3 +1,7 @@
-FROM eclipse-temurin:17-jdk
-COPY target/app.jar /app.jar
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+FROM nginx:alpine
+
+# Copier ton site dans le dossier web de Nginx
+COPY ./public /usr/share/nginx/html
+
+# Exposer le port 80
+EXPOSE 80
