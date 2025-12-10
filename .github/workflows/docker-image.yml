@@ -24,7 +24,7 @@ jobs:
       # Build Docker Image avec un tag `latest`
       - name: Build Docker image
         run: |
-          IMAGE_NAME=ghcr.io/${{ github.repository }}/my-nginx
+          IMAGE_NAME=ghcr.io/moussa-goita/my-nginx
           docker build . -t $IMAGE_NAME:latest
 
           # Tag supplémentaire basé sur le commit (optionnel)
