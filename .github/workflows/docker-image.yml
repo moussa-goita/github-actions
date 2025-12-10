@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ "master" ]
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,18 +25,16 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # Build Docker Image avec un tag `latest`
+      # Build Docker Image avec un tag `latest` et SHA commit
       - name: Build Docker image
         run: |
           IMAGE_NAME=ghcr.io/moussa-goita/my-nginx
           docker build . -t $IMAGE_NAME:latest
-
-          # Tag supplémentaire basé sur le commit (optionnel)
           docker tag $IMAGE_NAME:latest $IMAGE_NAME:${{ github.sha }}
 
       # Push vers GitHub Packages
       - name: Push Docker image
         run: |
-          IMAGE_NAME=ghcr.io/${{ github.repository }}/my-nginx
+          IMAGE_NAME=ghcr.io/moussa-goita/my-nginx
           docker push $IMAGE_NAME:latest
           docker push $IMAGE_NAME:${{ github.sha }}
